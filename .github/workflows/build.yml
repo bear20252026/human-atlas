@@ -98,7 +98,8 @@ jobs:
           ANDROID_KEYSTORE_B64: ${{ secrets.ANDROID_KEYSTORE_B64 }}
         run: |
           if [ -z "$ANDROID_KEYSTORE_B64" ]; then echo "ANDROID_KEYSTORE_B64 secret missing"; exit 1; fi
-          echo "$ANDROID_KEYSTORE_B64" | base64 -d > "$RUNNER_TEMP/release.keystore"
+          printf '%s' "$ANDROID_KEYSTORE_B64" | tr -d '[:space:]' | base64 -d > "$RUNNER_TEMP/release.keystore"
+          echo "keystore bytes: $(wc -c < "$RUNNER_TEMP/release.keystore")"
       - name: Build signed release APK
         working-directory: android
         env:
