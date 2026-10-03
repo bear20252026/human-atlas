@@ -47,6 +47,8 @@ jobs:
         with:
           name: web-dist
           path: dist
+      - name: Strip gzip copies for native packaging
+        run: node scripts/strip-gzip.mjs dist
       - name: Build NSIS installer
         run: npx electron-builder --win nsis --publish never
       - uses: actions/upload-artifact@v4
@@ -84,6 +86,8 @@ jobs:
         with:
           name: web-dist
           path: dist
+      - name: Strip gzip copies for native packaging
+        run: node scripts/strip-gzip.mjs dist
       - name: Install Android SDK platform
         shell: bash
         run: |

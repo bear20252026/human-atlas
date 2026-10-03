@@ -11,8 +11,8 @@
     "build": "vite build",
     "build:vercel": "vite build",
     "check": "tsc --noEmit",
-    "desktop": "npm run build && electron-builder --win nsis --publish never",
-    "android": "npm run build && cap sync android"
+    "desktop": "npm run build && node scripts/strip-gzip.mjs dist && electron-builder --win nsis --publish never",
+    "android": "npm run build && node scripts/strip-gzip.mjs dist && cap sync android"
   },
   "dependencies": {
     "@base-ui/react": "1.7.0",
