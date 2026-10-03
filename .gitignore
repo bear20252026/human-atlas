@@ -37,3 +37,14 @@ next-env.d.ts
 /outputs/
 /work/
 *.tsbuildinfo
+
+# local preview build (copy of dist at repo root)
+/index.html
+/assets/
+/models/
+/favicon.svg
+/ATTRIBUTION.md
+
+# i18n working files
+/.i18n-work/
+/wd_zh.json
