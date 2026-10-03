@@ -2,6 +2,7 @@
   "name": "anatomy-studio",
   "version": "0.1.0",
   "private": true,
+  "main": "electron/main.cjs",
   "engines": {
     "node": ">=22.13.0"
   },
@@ -9,10 +10,13 @@
     "dev": "vite --host 0.0.0.0 --port 3016",
     "build": "vite build",
     "build:vercel": "vite build",
-    "check": "tsc --noEmit"
+    "check": "tsc --noEmit",
+    "desktop": "npm run build && electron-builder --win nsis --publish never",
+    "android": "npm run build && cap sync android"
   },
   "dependencies": {
     "@base-ui/react": "1.7.0",
+    "@capacitor/core": "^8.5.2",
     "@shadcn/react": "0.3.0",
     "@types/three": "^0.159.0",
     "class-variance-authority": "0.7.1",
@@ -35,6 +39,8 @@
     "vinext": "1.0.0-beta.5"
   },
   "devDependencies": {
+    "@capacitor/android": "^8.5.2",
+    "@capacitor/cli": "^8.5.2",
     "@cloudflare/vite-plugin": "1.37.1",
     "@cloudflare/workers-types": "4.20260515.1",
     "@openai/sites-vite-plugin": "0.2.0",
@@ -44,6 +50,8 @@
     "@types/react-dom": "19.2.3",
     "@vitejs/plugin-react": "6.0.2",
     "@vitejs/plugin-rsc": "0.5.26",
+    "electron": "^44.5.1",
+    "electron-builder": "^26.15.3",
     "meshoptimizer": "^1.2.0",
     "oxfmt": "0.61.0",
     "oxlint": "1.76.0",
@@ -54,5 +62,41 @@
     "wrangler": "4.92.0"
   },
   "type": "module",
-  "license": "MIT"
+  "license": "MIT",
+  "allowScripts": {
+    "electron@44.5.1": true
+  },
+  "build": {
+    "appId": "com.bear20252026.humanatlas",
+    "productName": "Human Atlas",
+    "asar": false,
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "package.json",
+      "!node_modules/**"
+    ],
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Human Atlas"
+    }
+  }
 }
